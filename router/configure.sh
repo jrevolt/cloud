@@ -6,6 +6,9 @@ dnf install -y dnsmasq squid httpd haproxy
 echo "Copying configuration..."
 cp -rfv $basedir/etc /
 
+echo "Restarting network..."
+systemctl restart systemd-networkd
+
 echo "Configuring router firewall.."
 firewall-cmd --zone=internal --change-interface=eth0
 firewall-cmd --zone=external --change-interface=eth1
