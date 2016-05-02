@@ -6,7 +6,8 @@ dnf install -y dnsmasq squid httpd haproxy
 echo "Copying configuration..."
 cp -rfv $basedir/etc /
 
-echo "Restarting network..."
+echo "Configuring network..."
+systemctl disable systemd-resolved
 systemctl restart systemd-networkd
 
 echo "Configuring router firewall.."
@@ -22,5 +23,6 @@ firewall-cmd --runtime-to-permanent
 echo "Initializing squid cache..."
 squid -z
 
+echo "Starting services..."
 systemctl enable dnsmasq squid
 systemctl start dnsmasq squid
